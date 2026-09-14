@@ -339,7 +339,7 @@ export function HistoryViewer({ onClose }: { onClose: () => void }) {
                               </div>
                            </div>
                         )) : (
-                           <p className="text-xs text-slate-600">행동 기록 없음</p>
+                           <p className="text-xs text-muted-foreground">행동 기록 없음</p>
                         )}
                      </div>
                   </div>
@@ -396,7 +396,7 @@ export function HistoryViewer({ onClose }: { onClose: () => void }) {
                                ))}
                              </ul>
                           ) : (
-                             <p className="text-xs text-slate-600">투표 없음</p>
+                             <p className="text-xs text-muted-foreground">투표 없음</p>
                           )}
                        </div>
 

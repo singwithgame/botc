@@ -119,7 +119,7 @@ export function DayPhase({ isST }: { isST: boolean }) {
       {/* Right Column: Status & Voting & History */}
       <div className="flex flex-col gap-6">
          <div className="bg-card p-6 rounded-[2rem] border border-border backdrop-blur flex justify-between items-center shadow-lg mx-4 sm:mx-0">
-           <h2 className="text-3xl font-black text-slate-100 uppercase tracking-tighter font-serif">{roomState.dayNumber}일차 낮</h2>
+           <h2 className="text-3xl font-black text-foreground uppercase tracking-tighter font-serif">{roomState.dayNumber}일차 낮</h2>
            {roomState.executionTargetUid && (
              <div className="text-right">
                <p className="text-xs text-rose-500 font-black uppercase tracking-widest">Candidate</p>
@@ -140,7 +140,7 @@ export function DayPhase({ isST }: { isST: boolean }) {
                  <span className="text-4xl font-black text-primary mb-3">{yesCount}</span>
                  <span className="text-xs font-black text-muted-foreground uppercase tracking-widest">찬성 (최소 필요: {majorityNeeded})</span>
                  {roomState.players[user.uid]?.isDead && roomState.players[user.uid]?.hasGhostVote && (
-                    <div className="absolute -top-4 bg-amber-500 text-slate-950 text-xs font-black px-3 py-1 rounded-full animate-pulse shadow-lg">유령 투표권 있음</div>
+                    <div className="absolute -top-4 bg-amber-500 text-black text-xs font-black px-3 py-1 rounded-full animate-pulse shadow-lg">유령 투표권 있음</div>
                  )}
                  {roomState.players[user.uid]?.isDead && !roomState.players[user.uid]?.hasGhostVote && voters[user.uid] === true && (
                     <div className="absolute -top-4 bg-rose-600 text-white text-xs font-black px-3 py-1 rounded-full shadow-lg">투표권 소모됨</div>

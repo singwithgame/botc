@@ -19,8 +19,8 @@
 }
 
 body {
-  background-color: var(--color-slate-950);
-  color: var(--color-slate-300);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
   font-family: var(--font-sans);
   font-weight: 500;
   -webkit-font-smoothing: antialiased;
@@ -32,12 +32,12 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-slate-950); 
+  background: var(--color-background); 
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-slate-800); 
+  background: var(--color-border); 
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-slate-700); 
+  background: var(--color-muted-foreground); 
 }

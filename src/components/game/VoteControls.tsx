@@ -69,7 +69,7 @@ export function VoteControls({
         <div className="flex flex-col gap-3">
            <div className="flex flex-col gap-3">
               <Button onClick={endVoting} variant="default" size="lg" className="w-full font-black uppercase h-16 shadow-card border-transparent">투표 결과 확정</Button>
-              <Button onClick={handleCancelNomination} variant="ghost" className="w-full text-xs text-muted-foreground uppercase tracking-widest font-black underline underline-offset-8 decoration-slate-800">투표 취소 및 돌아가기</Button>
+              <Button onClick={handleCancelNomination} variant="ghost" className="w-full text-xs text-muted-foreground uppercase tracking-widest font-black underline underline-offset-8 decoration-border">투표 취소 및 돌아가기</Button>
            </div>
         </div>
       )}

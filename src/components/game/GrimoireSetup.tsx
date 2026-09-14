@@ -266,7 +266,7 @@ export function GrimoireSetup() {
                   ${roleDef?.align === 'good' ? 'border-primary bg-sky-950/80 text-primary' : 
                     roleDef?.align === 'evil' ? 'border-rose-500 bg-rose-950/80 text-rose-400' : 
                     'border-border bg-card text-muted-foreground'}
-                  ${isRH ? 'ring-4 ring-amber-500 ring-offset-2 ring-offset-slate-950' : ''}`}
+                  ${isRH ? 'ring-4 ring-amber-500 ring-offset-2 ring-offset-background' : ''}`}
                 >
                   {roleDef ? roleDef.name.substring(0, 2) : i + 1}
                 </div>
@@ -292,14 +292,14 @@ export function GrimoireSetup() {
           {orderedPlayers.map((p, index) => (
             <div key={p.uid} className="bg-background p-2.5 rounded-xl border border-border flex items-center gap-3 transition-colors hover:bg-card">
               <div className="flex flex-col gap-1">
-                <button onClick={() => movePlayer(index, -1)} disabled={index === 0} className="text-slate-600 hover:text-primary disabled:opacity-10 transition-colors">
+                <button onClick={() => movePlayer(index, -1)} disabled={index === 0} className="text-muted-foreground hover:text-primary disabled:opacity-10 transition-colors">
                   <svg width="12" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2L15 10H0L7.5 2Z" fill="currentColor"/></svg>
                 </button>
-                <button onClick={() => movePlayer(index, 1)} disabled={index === orderedPlayers.length - 1} className="text-slate-600 hover:text-primary disabled:opacity-10 transition-colors">
+                <button onClick={() => movePlayer(index, 1)} disabled={index === orderedPlayers.length - 1} className="text-muted-foreground hover:text-primary disabled:opacity-10 transition-colors">
                   <svg width="12" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 13L0 5H15L7.5 13Z" fill="currentColor"/></svg>
                 </button>
               </div>
-              <span className="text-xs font-black text-slate-700 w-4 font-mono">{index + 1}</span>
+              <span className="text-xs font-black text-muted-foreground w-4 font-mono">{index + 1}</span>
               <span className="text-xs font-bold text-foreground flex-1 truncate uppercase">{p.name}</span>
               <select
                 value={assignedRoles[p.uid] || ''}

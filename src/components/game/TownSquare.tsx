@@ -68,7 +68,7 @@ const PlayerToken = memo(({
              {secret?.character?.substring(0, 1).toUpperCase() || '?'}
            </div>
         ) : (
-           <span className="text-slate-600 text-sm font-black font-mono">{index + 1}</span>
+           <span className="text-muted-foreground text-sm font-black font-mono">{index + 1}</span>
         )}
 
         {isDead && (
@@ -79,13 +79,13 @@ const PlayerToken = memo(({
         )}
 
         {isDead && hasGhostVote && (
-          <div className="absolute -top-3 -right-3 w-8 h-8 bg-amber-500 rounded-full border-[3px] border-slate-950 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.6)] animate-bounce z-30">
-            <span className="text-sm text-slate-950 font-black italic">!</span>
+          <div className="absolute -top-3 -right-3 w-8 h-8 bg-amber-500 rounded-full border-[3px] border-background flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.6)] animate-bounce z-30">
+            <span className="text-sm text-black font-black italic">!</span>
           </div>
         )}
 
         {hasVotedYes && (
-          <div className="absolute -top-2 -left-2 w-6 h-6 bg-emerald-500 rounded-full border-2 border-slate-950 flex items-center justify-center shadow-lg z-30">
+          <div className="absolute -top-2 -left-2 w-6 h-6 bg-emerald-500 rounded-full border-2 border-background flex items-center justify-center shadow-lg z-30">
             <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="4"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
           </div>
         )}
@@ -94,7 +94,7 @@ const PlayerToken = memo(({
       <div className="mt-3 flex flex-col items-center gap-1 max-w-[100px]">
         <span className={cn(
           "text-sm font-black uppercase tracking-widest truncate w-full text-center px-2 py-0.5 rounded transition-all",
-          isDead ? "text-slate-700" : "text-foreground bg-card border border-border shadow-sm",
+          isDead ? "text-muted-foreground" : "text-foreground bg-card border border-border shadow-sm",
           isSelectingNominator && "text-primary bg-sky-950 border-primary/50",
           isNominated && "text-amber-400 bg-amber-950 border-amber-500/50",
           hasVotedYes && "text-emerald-400 bg-emerald-950 border-emerald-500/50"
@@ -117,7 +117,7 @@ const PlayerToken = memo(({
              <div className="flex gap-1 mt-1 flex-wrap justify-center">
                 {secret?.isRedHerring && <span className="text-[10px] font-black bg-rose-950/80 text-rose-300 border border-rose-900/50 px-1.5 py-0.5 rounded shadow-sm uppercase">환각</span>}
                 {isPoisoned && <span className="text-xs font-black bg-purple-600 text-white px-1.5 py-0.5 rounded shadow-sm uppercase">Psn</span>}
-                {isDrunk && <span className="text-xs font-black bg-amber-600 text-slate-950 px-1.5 py-0.5 rounded shadow-sm uppercase">Drk</span>}
+                {isDrunk && <span className="text-xs font-black bg-amber-600 text-black px-1.5 py-0.5 rounded shadow-sm uppercase">Drk</span>}
                 {isUsed && <span className="text-xs font-black bg-muted text-muted-foreground px-1.5 py-0.5 rounded shadow-sm uppercase">Used</span>}
              </div>
            </div>
@@ -372,7 +372,7 @@ export function TownSquare() {
            </div>
            <button 
              onClick={() => setIsHelpOpen(true)}
-             className="w-8 h-8 rounded-full bg-muted text-muted-foreground flex items-center justify-center font-black shadow-sm hover:bg-slate-700 hover:text-white transition-colors shrink-0"
+             className="w-8 h-8 rounded-full bg-muted text-muted-foreground flex items-center justify-center font-black shadow-sm hover:bg-muted-foreground/20 hover:text-white transition-colors shrink-0"
              aria-label="캐릭터 도움말"
            >
              ?
@@ -416,7 +416,7 @@ export function TownSquare() {
                            onClick={() => setActiveTab(tab)}
                            className={cn(
                               "flex-1 py-2 text-xs sm:text-sm font-black uppercase tracking-widest rounded-lg transition-all",
-                              activeTab === tab ? "bg-primary text-white shadow-lg scale-105" : "bg-muted text-muted-foreground hover:bg-slate-700"
+                              activeTab === tab ? "bg-primary text-white shadow-lg scale-105" : "bg-muted text-muted-foreground hover:bg-muted-foreground/20"
                            )}
                         >
                            {tab === 'townsfolk' ? '주민' : tab === 'outsider' ? '외부자' : '하수인/악마'}
@@ -478,7 +478,7 @@ export function TownSquare() {
             >
            {role === 'st' && !isVoting && (
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-10 animate-fade-in">
-                <p className="text-xs font-black uppercase tracking-widest text-slate-600 mb-1">
+                <p className="text-xs font-black uppercase tracking-widest text-muted-foreground mb-1">
                   {selectedNominator ? "지목할 대상을 클릭하세요" : "지목자를 클릭하세요"}
                 </p>
                 <div className="flex justify-center gap-1">

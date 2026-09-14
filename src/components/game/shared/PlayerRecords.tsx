@@ -29,7 +29,7 @@ export const PlayerRecords = memo(({
            </div>
         </div>
         <span 
-          className={`text-slate-600 transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`}
+          className={`text-muted-foreground transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`}
           aria-hidden="true"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -45,7 +45,7 @@ export const PlayerRecords = memo(({
                       <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500/20 group-hover:bg-indigo-500 transition-colors"></div>
                       <div className="flex justify-between items-center mb-2 sm:mb-3">
                          <span className="text-xs sm:text-xs font-black text-indigo-400/60 uppercase tracking-[0.2em]">기록 #{i + 1}</span>
-                         <span className="text-xs font-bold text-slate-700 font-mono text-xs uppercase">밤 {i + 1}</span>
+                         <span className="text-xs font-bold text-muted-foreground font-mono text-xs uppercase">밤 {i + 1}</span>
                       </div>
                       <div className="pl-1 sm:pl-2 space-y-1">
                          {msg.split('\n').filter(line => !line.trim().endsWith('없음')).length > 0 ? (
@@ -60,7 +60,7 @@ export const PlayerRecords = memo(({
                  ))
               ) : (
                  <div className="py-10 sm:py-12 px-6 text-center border-2 border-dashed border-border rounded-[2rem] bg-background shadow-inner">
-                   <p className="text-slate-700 font-black uppercase tracking-widest text-xs sm:text-xs font-serif">복구된 기록이 없습니다.</p>
+                   <p className="text-muted-foreground font-black uppercase tracking-widest text-xs sm:text-xs font-serif">복구된 기록이 없습니다.</p>
                  </div>
               )}
            </div>

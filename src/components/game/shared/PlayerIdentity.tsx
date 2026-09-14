@@ -47,7 +47,7 @@ export const PlayerIdentity = memo(({
            </div>
         </div>
         <span 
-          className={`text-slate-600 transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`}
+          className={`text-muted-foreground transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`}
           aria-hidden="true"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -65,7 +65,7 @@ export const PlayerIdentity = memo(({
           >
             <div className="p-6 sm:p-8 pt-0 space-y-6 sm:space-y-8 border-t border-border mt-2 bg-background">
                <div className="py-6 px-6 sm:px-8 bg-background rounded-[1.5rem] border border-border shadow-inner mt-4 sm:mt-6 text-center space-y-3">
-                  <p className="text-xs font-black text-slate-600 uppercase tracking-widest mb-2">현재 나의 정체</p>
+                  <p className="text-xs font-black text-muted-foreground uppercase tracking-widest mb-2">현재 나의 정체</p>
                   <p className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-100 to-sky-400 uppercase tracking-tighter italic">{currentRoleName}</p>
                </div>
 

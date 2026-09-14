@@ -290,7 +290,7 @@ export function STNightDashboard() {
                              </span>
                           </div>
                        ) : (
-                          <span className="text-xs text-slate-700 font-black animate-pulse italic uppercase tracking-wider">대기 중</span>
+                          <span className="text-xs text-muted-foreground font-black animate-pulse italic uppercase tracking-wider">대기 중</span>
                        )}
                     </div>
                  </div>
@@ -326,7 +326,7 @@ export function STNightDashboard() {
                    p.isDead ? "hidden" : (
                       pendingDeaths.includes(p.uid)
                       ? "bg-rose-600 border-rose-400 text-white shadow-lg shadow-rose-900/40 z-10"
-                      : "bg-background border-border text-slate-600 hover:border-border"
+                      : "bg-background border-border text-muted-foreground hover:border-border"
                    )
                  )}
                >
@@ -350,7 +350,7 @@ export function STNightDashboard() {
             <button 
                onClick={generateAutoSuggestions}
                disabled={!allActionsCompleted}
-               className="text-xs font-black bg-primary text-slate-950 px-4 py-1.5 rounded-full hover:bg-sky-400 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary transition-all active:scale-95 shadow-lg shadow-sky-950/40 uppercase tracking-tighter"
+               className="text-xs font-black bg-primary text-black px-4 py-1.5 rounded-full hover:bg-sky-400 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary transition-all active:scale-95 shadow-lg shadow-sky-950/40 uppercase tracking-tighter"
             >
                자동 제안 생성
             </button>

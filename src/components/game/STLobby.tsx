@@ -74,7 +74,7 @@ export function STLobby() {
           isLoading={loading}
           variant="default"
           size="lg"
-          className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-[0_0_15px_rgba(245,158,11,0.2)]"
+          className="w-full bg-amber-500 hover:bg-amber-400 text-black shadow-[0_0_15px_rgba(245,158,11,0.2)]"
         >
           새로운 방 생성하기
         </Button>

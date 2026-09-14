@@ -164,7 +164,7 @@ function App() {
                   {!showSTLogin ? (
                     <button 
                       onClick={() => setShowSTLogin(true)}
-                      className="text-slate-600 hover:text-amber-500/80 text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 mx-auto"
+                      className="text-muted-foreground hover:text-amber-500/80 text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 mx-auto"
                     >
                       <span className="opacity-50">스토리텔러 관리자 모드</span>
                     </button>
@@ -191,7 +191,7 @@ function App() {
                         <button 
                           type="submit"
                           disabled={isAuthenticating || !stPassword}
-                          className="flex-1 bg-amber-600 hover:bg-amber-500 disabled:opacity-50 text-slate-950 text-xs font-black uppercase py-2 rounded-md transition-all shadow-lg shadow-amber-950/20"
+                          className="flex-1 bg-amber-600 hover:bg-amber-500 disabled:opacity-50 text-black text-xs font-black uppercase py-2 rounded-md transition-all shadow-lg shadow-amber-950/20"
                         >
                           {isAuthenticating ? '확인 중...' : '접속'}
                         </button>
@@ -216,7 +216,7 @@ function App() {
           {role && (!roomState || roomState.status === 'lobby' || roomState.status === 'setup') && (
             <button 
               onClick={resetSession}
-              className="mt-6 text-slate-600 text-xs font-black uppercase tracking-widest hover:text-foreground transition-colors flex items-center gap-1.5"
+              className="mt-6 text-muted-foreground text-xs font-black uppercase tracking-widest hover:text-foreground transition-colors flex items-center gap-1.5"
             >
               <span>←</span> 역할 변경
             </button>
@@ -260,7 +260,7 @@ function App() {
                 {role === 'st' ? (
                    <>
                      <button onClick={() => alert("현재 게임 기록이 마도서 데이터베이스에 안전하게 보존(저장)되었습니다.")} className="w-full py-4 rounded-xl font-black uppercase tracking-widest text-sm border-2 border-border text-foreground hover:bg-muted transition-all">게임 기록 보존</button>
-                     <button onClick={handleReturnToLobby} className={`w-full py-5 rounded-2xl font-black uppercase tracking-widest text-lg shadow-card transition-all active:scale-95 ${roomState.winner === 'good' ? "bg-primary text-slate-950 hover:bg-sky-400" : "bg-rose-600 text-white hover:bg-rose-500"}`}>대기실 이동</button>
+                     <button onClick={handleReturnToLobby} className={`w-full py-5 rounded-2xl font-black uppercase tracking-widest text-lg shadow-card transition-all active:scale-95 ${roomState.winner === 'good' ? "bg-primary text-black hover:bg-sky-400" : "bg-rose-600 text-white hover:bg-rose-500"}`}>대기실 이동</button>
                    </>
                 ) : (
                    <div className="w-full py-5 rounded-2xl font-black uppercase tracking-widest text-sm bg-card text-muted-foreground border border-border text-center animate-pulse">
