@@ -9,27 +9,13 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        // brandSolid — key color background, white text
-        default:
-          "bg-brand text-white active:bg-brand/85 disabled:bg-surface-muted disabled:text-text-disabled",
-        // neutralSolid — 어두운 배경, 흰 텍스트
-        neutral:
-          "bg-[#2A2A2A] text-white active:bg-[#3C3C3C] disabled:bg-surface-muted disabled:text-text-disabled dark:bg-[#E0E0E0] dark:text-[#121212] dark:active:bg-[#C0C0C0]",
-        // neutralWeak — 연한 회색 배경, 어두운 텍스트
-        secondary:
-          "bg-[#F3F4F5] text-text-primary active:bg-[#EAEBEC] disabled:bg-surface-muted disabled:text-text-disabled dark:bg-[#2B2E35] dark:text-[#E0E0E0] dark:active:bg-[#393D46]",
-        // criticalSolid — 위험 액션
-        destructive:
-          "bg-destructive text-white active:bg-destructive/85 focus-visible:ring-destructive/20 disabled:bg-surface-muted disabled:text-text-disabled",
-        // outline — 테두리만
-        outline:
-          "border border-border bg-transparent text-text-primary active:bg-surface-muted/50 disabled:border-surface-muted disabled:text-text-disabled dark:border-white/8",
-        // ghost — 배경/테두리 없음
-        ghost:
-          "bg-transparent text-text-primary active:bg-surface-muted/50 disabled:text-text-disabled",
-        // brandGhost — 키컬러 텍스트, 배경 없음
-        brandGhost:
-          "bg-transparent text-brand active:bg-brand/8 disabled:text-text-disabled",
+        default: "bg-primary text-primary-foreground shadow-button hover:opacity-90 active:scale-[0.98]",
+        neutral: "bg-card text-card-foreground border border-border hover:bg-accent active:scale-[0.98]",
+        secondary: "bg-secondary text-secondary-foreground hover:opacity-80 active:scale-[0.98]",
+        destructive: "bg-destructive text-destructive-foreground hover:opacity-90 active:scale-[0.98]",
+        outline: "border border-border bg-transparent text-foreground hover:bg-accent hover:text-accent-foreground active:scale-[0.98]",
+        ghost: "bg-transparent text-foreground hover:bg-accent hover:text-accent-foreground active:scale-[0.98]",
+        brandGhost: "bg-transparent text-primary hover:bg-primary/10 active:scale-[0.98]",
       },
       size: {
         xs: "h-8 px-3.5 gap-1 text-[13px] [&_svg:not([class*='size-'])]:size-3.5",

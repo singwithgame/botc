@@ -73,7 +73,7 @@
   --chart-5: #60A5FA;
 
   /* === Radius (Raycast = sharp, small radius) === */
-  --radius: 0.5rem;
+  --radius: 0.75rem;
 
   /* === Shadows (Raycast = glow, not lift) === */
   --shadow-card: 0 0 0 1px rgba(255,255,255,0.04), 0 8px 24px rgba(0,0,0,0.4);
