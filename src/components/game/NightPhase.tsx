@@ -3,7 +3,7 @@ import { usePlayerSecretData } from '../../hooks/useFirebaseSync';
 import { database } from '../../lib/firebase';
 import { ref, update } from 'firebase/database';
 import { useAuth } from '../../hooks/useAuth';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button';
 import { STNightDashboard } from './STNightDashboard';
 import { useState } from 'react';
 import { cn } from '../../lib/utils/cn';
@@ -81,28 +81,28 @@ export function NightPhase({ isST }: { isST: boolean }) {
       <TownSquare />
 
       {/* 3. 밤 단계 Action Selection UI */}
-      <div className="bg-slate-900/90 p-6 sm:p-8 rounded-[3rem] border border-slate-800 backdrop-blur shadow-2xl text-center space-y-6 sm:space-y-8 relative overflow-hidden">
+      <div className="bg-card p-6 sm:p-8 rounded-[3rem] border border-border backdrop-blur shadow-card text-center space-y-6 sm:space-y-8 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-sky-500/50 to-transparent"></div>
         
         <div className="space-y-2">
-           <p className="text-xs font-black text-slate-500 uppercase tracking-[0.4em]">Current Phase</p>
+           <p className="text-xs font-black text-muted-foreground uppercase tracking-[0.4em]">Current Phase</p>
            <h2 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tighter italic font-serif">The Night Deepens</h2>
         </div>
 
         {isConfirmed ? (
-           <div className="py-10 sm:py-12 px-6 bg-slate-950/50 rounded-[2.5rem] border border-slate-800 shadow-inner space-y-4">
-              <div className="w-16 h-16 bg-sky-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                 <div className="w-8 h-8 bg-sky-500 rounded-full animate-ping opacity-40"></div>
-                 <div className="w-4 h-4 bg-sky-500 rounded-full absolute"></div>
+           <div className="py-10 sm:py-12 px-6 bg-background rounded-[2.5rem] border border-border shadow-inner space-y-4">
+              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                 <div className="w-8 h-8 bg-primary rounded-full animate-ping opacity-40"></div>
+                 <div className="w-4 h-4 bg-primary rounded-full absolute"></div>
               </div>
-              <p className="text-sky-400 font-black uppercase tracking-widest text-sm">Action Transmitted</p>
-              <p className="text-slate-500 text-sm sm:text-xs leading-relaxed break-keep-all">스토리텔러가 밤의 결산을 마치고 아침을 깨울 때까지 기다려 주세요.</p>
+              <p className="text-primary font-black uppercase tracking-widest text-sm">Action Transmitted</p>
+              <p className="text-muted-foreground text-sm sm:text-xs leading-relaxed break-keep-all">스토리텔러가 밤의 결산을 마치고 아침을 깨울 때까지 기다려 주세요.</p>
            </div>
         ) : (
            <div className="space-y-6 sm:space-y-8 animate-fade-in">
               {needsTarget || needsTwoTargets || isButler ? (
                  <div className="space-y-4 sm:space-y-6">
-                    <p className="text-sm sm:text-xs font-black text-slate-400 uppercase tracking-widest">{isButler ? '주인을 선택하세요' : '능력을 사용할 대상을 선택하세요'}</p>
+                    <p className="text-sm sm:text-xs font-black text-muted-foreground uppercase tracking-widest">{isButler ? '주인을 선택하세요' : '능력을 사용할 대상을 선택하세요'}</p>
                     <div className="grid grid-cols-2 gap-2 pr-2">
                        {selectablePlayers.map(p => (
                           <button
@@ -120,8 +120,8 @@ export function NightPhase({ isST }: { isST: boolean }) {
                             className={cn(
                                "p-3 sm:p-4 rounded-2xl border text-sm sm:text-xs font-black uppercase transition-all truncate outline-none",
                                (targetUid === p.uid || target2Uid === p.uid)
-                                ? "bg-sky-600 border-sky-400 text-white shadow-lg shadow-sky-900/40"
-                                : "bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-600 focus-visible:ring-2 focus-visible:ring-sky-500"
+                                ? "bg-primary border-sky-400 text-white shadow-lg shadow-sky-900/40"
+                                : "bg-background border-border text-muted-foreground hover:border-slate-600 focus-visible:ring-2 focus-visible:ring-sky-500"
                             )}
                           >
                              {p.name}
@@ -130,16 +130,16 @@ export function NightPhase({ isST }: { isST: boolean }) {
                     </div>
                  </div>
               ) : (
-                 <div className="py-8 sm:py-10 px-4 bg-slate-950/40 rounded-[2rem] sm:rounded-[2.5rem] border border-slate-800 shadow-inner">
-                    <p className="text-slate-400 text-sm sm:text-xs font-bold leading-relaxed uppercase tracking-widest italic break-keep-all">당신은 밤에 깨지 않는 역할이거나,<br/>오늘 밤 특별한 행동이 필요하지 않습니다.</p>
+                 <div className="py-8 sm:py-10 px-4 bg-background rounded-[2rem] sm:rounded-[2.5rem] border border-border shadow-inner">
+                    <p className="text-muted-foreground text-sm sm:text-xs font-bold leading-relaxed uppercase tracking-widest italic break-keep-all">당신은 밤에 깨지 않는 역할이거나,<br/>오늘 밤 특별한 행동이 필요하지 않습니다.</p>
                  </div>
               )}
               
               <Button 
                  onClick={handleConfirmAction} 
-                 variant="primary" 
+                 variant="default" 
                  size="lg" 
-                 className="w-full h-14 sm:h-16 text-base sm:text-lg font-black uppercase tracking-widest shadow-xl border-transparent"
+                 className="w-full h-14 sm:h-16 text-base sm:text-lg font-black uppercase tracking-widest shadow-card border-transparent"
                  disabled={(needsTarget && !targetUid) || (needsTwoTargets && (!targetUid || !target2Uid)) || (isButler && !targetUid)}
               >
                  밤 행동 확정 (Confirm)

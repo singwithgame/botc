@@ -3,7 +3,7 @@ import { useSecretData } from '../../hooks/useFirebaseSync';
 import { database } from '../../lib/firebase';
 import { ref, update } from 'firebase/database';
 import { resolveNightActions, getNightSuggestions } from '../../lib/rulesEngine';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button';
 import { getRoleName } from '../../constants/roles';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { cn } from '../../lib/utils/cn';
@@ -261,9 +261,9 @@ export function STNightDashboard() {
       <TownSquare />
       
       {/* 1. 행동 모니터링 Section */}
-      <section className="bg-slate-900/90 p-8 rounded-[2.5rem] border border-slate-800 shadow-2xl relative overflow-hidden">
-         <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500/5 blur-3xl pointer-events-none"></div>
-         <h3 className="text-xs font-black text-slate-500 uppercase tracking-[0.4em] mb-8 border-b border-slate-800/50 pb-4">실시간 밤 행동 요약</h3>
+      <section className="bg-card p-8 rounded-[2.5rem] border border-border shadow-card relative overflow-hidden">
+         <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl pointer-events-none"></div>
+         <h3 className="text-xs font-black text-muted-foreground uppercase tracking-[0.4em] mb-8 border-b border-border pb-4">실시간 밤 행동 요약</h3>
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {players.filter(p => !p.isDead).map(p => {
                const action = actions[p.uid];
@@ -276,15 +276,15 @@ export function STNightDashboard() {
                if (!needsTarget && !needsTwoTargets && !isButler) return null;
                
                return (
-                 <div key={p.uid} className="flex justify-between items-center bg-slate-950/60 p-4 rounded-2xl border border-slate-800/50 shadow-inner group">
+                 <div key={p.uid} className="flex justify-between items-center bg-background p-4 rounded-2xl border border-border shadow-inner group">
                     <div className="flex flex-col">
-                       <span className="text-xs text-slate-500 font-bold uppercase tracking-widest">{getRoleName(role)}{secretState.players[p.uid]?.isRedHerring && <span className="text-rose-400 ml-1">(환각 대상)</span>}</span>
-                       <span className="text-sm font-black text-slate-200">{p.name}</span>
+                       <span className="text-xs text-muted-foreground font-bold uppercase tracking-widest">{getRoleName(role)}{secretState.players[p.uid]?.isRedHerring && <span className="text-rose-400 ml-1">(환각 대상)</span>}</span>
+                       <span className="text-sm font-black text-foreground">{p.name}</span>
                     </div>
                     <div className="text-right">
                        {action?.status === 'completed' ? (
                           <div className="flex flex-col items-end">
-                             <span className="text-xs text-sky-400 font-black bg-sky-500/10 px-3 py-1 rounded-lg border border-sky-500/20 shadow-sm animate-fade-in">
+                             <span className="text-xs text-primary font-black bg-primary/10 px-3 py-1 rounded-lg border border-primary/20 shadow-sm animate-fade-in">
                                 {roomState.players[action.targetUid || '']?.name || '완료'}
                                 {action.target2Uid && `, ${roomState.players[action.target2Uid]?.name}`}
                              </span>
@@ -300,9 +300,9 @@ export function STNightDashboard() {
       </section>
 
       {/* 2. 사망자 확정 Section */}
-      <section className="bg-slate-900/90 p-8 rounded-[2.5rem] border border-slate-800 shadow-2xl relative overflow-hidden">
+      <section className="bg-card p-8 rounded-[2.5rem] border border-border shadow-card relative overflow-hidden">
          <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/5 blur-3xl pointer-events-none"></div>
-         <h3 className="text-xs font-black text-slate-500 uppercase tracking-[0.4em] mb-8 border-b border-slate-800/50 pb-4">아침 사망자 명단 확정</h3>
+         <h3 className="text-xs font-black text-muted-foreground uppercase tracking-[0.4em] mb-8 border-b border-border pb-4">아침 사망자 명단 확정</h3>
          
          {mayorTargeted && (
             <div className="mb-6 bg-amber-500/10 border border-amber-500/30 p-5 rounded-2xl animate-pulse">
@@ -326,7 +326,7 @@ export function STNightDashboard() {
                    p.isDead ? "hidden" : (
                       pendingDeaths.includes(p.uid)
                       ? "bg-rose-600 border-rose-400 text-white shadow-lg shadow-rose-900/40 z-10"
-                      : "bg-slate-950 border-slate-800 text-slate-600 hover:border-slate-700"
+                      : "bg-background border-border text-slate-600 hover:border-border"
                    )
                  )}
                >
@@ -334,23 +334,23 @@ export function STNightDashboard() {
                </button>
             ))}
          </div>
-         <div className="flex items-start gap-2 bg-slate-950/40 p-4 rounded-xl border border-slate-800/30">
+         <div className="flex items-start gap-2 bg-background p-4 rounded-xl border border-border">
             <span className="text-amber-500 text-xs">ℹ️</span>
-            <p className="text-xs text-slate-500 leading-relaxed italic">
+            <p className="text-xs text-muted-foreground leading-relaxed italic">
                시스템이 악마의 공격을 계산하여 제안했습니다. 시장의 능력 발동이나 군인의 생존 등 변수가 있다면 위 명단을 직접 수정하세요. 붉은색으로 표시된 인원들이 다음 아침에 사망한 것으로 발표됩니다.
             </p>
          </div>
       </section>
 
       {/* 3. 플레이어 정보 전송 Section */}
-      <section className="bg-slate-900/90 p-8 rounded-[2.5rem] border border-slate-800 shadow-2xl relative overflow-hidden">
-         <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500/5 blur-3xl pointer-events-none"></div>
-         <div className="flex justify-between items-center mb-8 border-b border-slate-800/50 pb-4">
-            <h3 className="text-xs font-black text-slate-500 uppercase tracking-[0.4em]">개별 정보 메시지 작성</h3>
+      <section className="bg-card p-8 rounded-[2.5rem] border border-border shadow-card relative overflow-hidden">
+         <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl pointer-events-none"></div>
+         <div className="flex justify-between items-center mb-8 border-b border-border pb-4">
+            <h3 className="text-xs font-black text-muted-foreground uppercase tracking-[0.4em]">개별 정보 메시지 작성</h3>
             <button 
                onClick={generateAutoSuggestions}
                disabled={!allActionsCompleted}
-               className="text-xs font-black bg-sky-500 text-slate-950 px-4 py-1.5 rounded-full hover:bg-sky-400 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-sky-500 transition-all active:scale-95 shadow-lg shadow-sky-950/40 uppercase tracking-tighter"
+               className="text-xs font-black bg-primary text-slate-950 px-4 py-1.5 rounded-full hover:bg-sky-400 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary transition-all active:scale-95 shadow-lg shadow-sky-950/40 uppercase tracking-tighter"
             >
                자동 제안 생성
             </button>
@@ -360,13 +360,13 @@ export function STNightDashboard() {
             {players.map(p => {
                const secret = secretState.players[p.uid];
                return (
-                 <div key={p.uid} className="space-y-3 group bg-slate-950/30 p-4 rounded-2xl border border-transparent hover:border-slate-800 transition-colors">
+                 <div key={p.uid} className="space-y-3 group bg-background p-4 rounded-2xl border border-transparent hover:border-border transition-colors">
                     <div className="flex justify-between items-center">
                        <div className="flex items-center gap-3">
                           <div className={cn("w-2 h-2 rounded-full shadow-sm", p.isDead ? "bg-slate-700" : "bg-emerald-500 shadow-emerald-500/20")}></div>
-                          <span className="text-sm font-black text-slate-200">
+                          <span className="text-sm font-black text-foreground">
                              {p.name} 
-                             <span className="text-xs text-slate-500 font-bold ml-2 tracking-widest">
+                             <span className="text-xs text-muted-foreground font-bold ml-2 tracking-widest">
                                ({getRoleName(secret?.character)})
                                {secret?.character === 'drunk' && secret?.fakeCharacter && ` -> (${getRoleName(secret.fakeCharacter)})`}
                              </span>
@@ -376,7 +376,7 @@ export function STNightDashboard() {
                           {secret?.isRedHerring && <span className="text-xs bg-rose-950 text-rose-300 border border-rose-900/50 px-2 py-0.5 rounded-full font-black uppercase shadow-sm">환각 대상</span>}
                           {secret?.character === 'dead_imp' && <span className="text-xs bg-rose-950 text-rose-500 border border-rose-900/50 px-2 py-0.5 rounded-full font-black uppercase shadow-sm">구 임프</span>}
                           {secret?.character === 'imp' && <span className="text-xs bg-rose-600 text-white border border-rose-500 px-2 py-0.5 rounded-full font-black uppercase shadow-sm animate-pulse">현 임프</span>}
-                          {secret?.isUsed && <span className="text-xs bg-slate-800 text-slate-400 border border-slate-700 px-2 py-0.5 rounded-full font-black uppercase shadow-sm">사용됨</span>}
+                          {secret?.isUsed && <span className="text-xs bg-muted text-muted-foreground border border-border px-2 py-0.5 rounded-full font-black uppercase shadow-sm">사용됨</span>}
                           {pendingPoisoned === p.uid && <span className="text-xs bg-purple-600/20 text-purple-400 border border-purple-600/30 px-2 py-0.5 rounded-full font-black uppercase shadow-sm animate-pulse">독</span>}
                           {secret?.isDrunk && <span className="text-xs bg-amber-600/20 text-amber-500 border border-amber-600/30 px-2 py-0.5 rounded-full font-black uppercase shadow-sm">취함</span>}
                           {p.isDead && p.hasGhostVote && <span className="text-xs bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full font-black uppercase animate-pulse">유령 표</span>}
@@ -402,19 +402,19 @@ export function STNightDashboard() {
                       placeholder={`${p.name}님에게 전달할 비밀 정보를 입력하세요...`}
                       value={editedSuggestions[p.uid] || ''}
                       onChange={(e) => handleUpdateSuggestion(p.uid, e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-slate-300 focus:border-sky-500/50 focus:bg-slate-900 outline-none min-h-[80px] custom-scrollbar transition-all shadow-inner"
+                      className="w-full bg-background border border-border rounded-xl p-4 text-xs text-foreground focus:border-primary/50 focus:bg-card outline-none min-h-[80px] custom-scrollbar transition-all shadow-inner"
                     />
                     {secret?.messageHistory && secret.messageHistory.length > 0 && (
                        <details className="mt-3 group/details">
-                          <summary className="text-xs font-bold text-slate-500 cursor-pointer uppercase tracking-widest hover:text-sky-400 transition-colors list-none flex items-center justify-between bg-slate-900/50 p-2.5 rounded-xl border border-slate-800">
+                          <summary className="text-xs font-bold text-muted-foreground cursor-pointer uppercase tracking-widest hover:text-primary transition-colors list-none flex items-center justify-between bg-card p-2.5 rounded-xl border border-border">
                              과거 전송 기록 열람
-                             <span className="text-[10px] bg-slate-800 px-2 py-0.5 rounded-full text-slate-400">{secret.messageHistory.length}</span>
+                             <span className="text-[10px] bg-muted px-2 py-0.5 rounded-full text-muted-foreground">{secret.messageHistory.length}</span>
                           </summary>
                           <div className="mt-3 space-y-2 max-h-40 overflow-y-auto custom-scrollbar pr-1 pl-1">
                              {secret.messageHistory.map((msg: string, idx: number) => (
-                                <div key={idx} className="bg-slate-950/80 p-3 rounded-xl border border-slate-800/80">
-                                   <span className="text-[10px] text-sky-500 font-black mb-1 block uppercase tracking-widest">{idx + 1}일차</span>
-                                   <p className="text-xs text-slate-400 whitespace-pre-wrap leading-relaxed">{msg}</p>
+                                <div key={idx} className="bg-background p-3 rounded-xl border border-border">
+                                   <span className="text-[10px] text-primary font-black mb-1 block uppercase tracking-widest">{idx + 1}일차</span>
+                                   <p className="text-xs text-muted-foreground whitespace-pre-wrap leading-relaxed">{msg}</p>
                                 </div>
                              ))}
                           </div>
@@ -426,7 +426,7 @@ export function STNightDashboard() {
          </div>
       </section>
 
-      <Button onClick={finalizeNight} variant="primary" size="lg" className="w-full h-24 font-black uppercase tracking-[0.4em] text-2xl shadow-2xl border-transparent shadow-sky-950/50 hover:scale-[1.01] active:scale-[0.99] transition-all">
+      <Button onClick={finalizeNight} variant="default" size="lg" className="w-full h-24 font-black uppercase tracking-[0.4em] text-2xl shadow-card border-transparent shadow-sky-950/50 hover:scale-[1.01] active:scale-[0.99] transition-all">
          아침을 깨우기
       </Button>
     </div>

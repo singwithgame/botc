@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { database } from '../../lib/firebase';
 import { ref, get, query, orderByChild, limitToLast, endBefore, remove } from 'firebase/database';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button';
 import { getRoleName } from '../../constants/roles';
 import type { GameHistory } from '../../types/game';
 import { cn } from '../../lib/utils/cn';
@@ -273,43 +273,43 @@ export function HistoryViewer({ onClose }: { onClose: () => void }) {
     };
 
     return (
-      <div className="flex flex-col gap-6 w-full max-w-2xl animate-fade-in bg-slate-900 p-6 rounded-3xl border border-slate-700 h-[80vh] overflow-y-auto custom-scrollbar">
-        <div className="flex justify-between items-center border-b border-slate-800 pb-4 sticky top-0 bg-slate-900 z-10">
-          <h2 className="text-xl font-black text-sky-400">게임 세부 기록</h2>
+      <div className="flex flex-col gap-6 w-full max-w-2xl animate-fade-in bg-card p-6 rounded-3xl border border-border h-[80vh] overflow-y-auto custom-scrollbar">
+        <div className="flex justify-between items-center border-b border-border pb-4 sticky top-0 bg-card z-10">
+          <h2 className="text-xl font-black text-primary">게임 세부 기록</h2>
           <div className="flex gap-2">
              <Button variant="secondary" size="sm" onClick={handleCopyText} className="text-xs uppercase font-black">
                {copied ? '복사 완료!' : '텍스트 복사'}
              </Button>
-             <Button variant="ghost" size="sm" onClick={() => setSelectedHistory(null)} className="text-slate-400 hover:text-white">뒤로가기</Button>
+             <Button variant="ghost" size="sm" onClick={() => setSelectedHistory(null)} className="text-muted-foreground hover:text-white">뒤로가기</Button>
           </div>
         </div>
         
         <div className="space-y-4">
-          <p className="text-sm text-slate-400">일시: {new Date(selectedHistory.timestamp).toLocaleString()}</p>
+          <p className="text-sm text-muted-foreground">일시: {new Date(selectedHistory.timestamp).toLocaleString()}</p>
           <div className="text-xl font-black flex items-center gap-2">
-            승리 진영: <span className={cn("px-3 py-1 rounded-lg text-sm", selectedHistory.winner === 'good' ? 'bg-sky-500/20 text-sky-400' : 'bg-rose-500/20 text-rose-500')}>{selectedHistory.winner === 'good' ? '선의 승리' : '악의 승리'}</span>
-            <span className="text-sm text-slate-500 font-bold ml-2">({selectedHistory.winReason})</span>
+            승리 진영: <span className={cn("px-3 py-1 rounded-lg text-sm", selectedHistory.winner === 'good' ? 'bg-primary/20 text-primary' : 'bg-rose-500/20 text-rose-500')}>{selectedHistory.winner === 'good' ? '선의 승리' : '악의 승리'}</span>
+            <span className="text-sm text-muted-foreground font-bold ml-2">({selectedHistory.winReason})</span>
           </div>
         </div>
 
         {selectedHistory.evilInfo && (
            <div className="bg-rose-950/20 p-4 rounded-xl border border-rose-900/30 space-y-2">
               <h3 className="text-sm font-black text-rose-500 uppercase tracking-widest mb-3">초기 악마 정보</h3>
-              <p className="text-sm text-slate-300"><span className="text-rose-400 font-bold">초기 악마:</span> {selectedHistory.players.find(p => p.uid === selectedHistory.evilInfo?.demonUid)?.name || '알 수 없음'}</p>
-              <p className="text-sm text-slate-300"><span className="text-rose-400 font-bold">초기 하수인:</span> {selectedHistory.evilInfo?.minionUids?.map(u => selectedHistory.players.find(p => p.uid === u)?.name).join(', ') || '없음'}</p>
-              <p className="text-sm text-slate-300"><span className="text-rose-400 font-bold">악마 블러프:</span> {selectedHistory.evilInfo?.bluffs?.map(b => getRoleName(b)).join(', ') || '없음'}</p>
+              <p className="text-sm text-foreground"><span className="text-rose-400 font-bold">초기 악마:</span> {selectedHistory.players.find(p => p.uid === selectedHistory.evilInfo?.demonUid)?.name || '알 수 없음'}</p>
+              <p className="text-sm text-foreground"><span className="text-rose-400 font-bold">초기 하수인:</span> {selectedHistory.evilInfo?.minionUids?.map(u => selectedHistory.players.find(p => p.uid === u)?.name).join(', ') || '없음'}</p>
+              <p className="text-sm text-foreground"><span className="text-rose-400 font-bold">악마 블러프:</span> {selectedHistory.evilInfo?.bluffs?.map(b => getRoleName(b)).join(', ') || '없음'}</p>
            </div>
         )}
 
         <div>
-          <h3 className="text-sm font-black text-slate-500 uppercase tracking-widest mb-3">플레이어 정보</h3>
+          <h3 className="text-sm font-black text-muted-foreground uppercase tracking-widest mb-3">플레이어 정보</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
              {selectedHistory.players.map(p => (
-               <div key={p.uid} className="bg-slate-950 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
-                 <span className="font-bold text-slate-200 text-sm">{p.name}</span>
+               <div key={p.uid} className="bg-background p-3 rounded-xl border border-border flex justify-between items-center">
+                 <span className="font-bold text-foreground text-sm">{p.name}</span>
                  <span className="flex items-center gap-1">
                     {p.isRedHerring && <span className="text-[10px] text-rose-300 bg-rose-950/50 px-2 py-1 rounded-full border border-rose-900/50">환각 대상</span>}
-                    <span className="text-xs text-slate-400 bg-slate-800 px-2 py-1 rounded-full">
+                    <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded-full">
                        {getFormattedRole(p, selectedHistory.evilInfo)}
                     </span>
                  </span>
@@ -330,11 +330,11 @@ export function HistoryViewer({ onClose }: { onClose: () => void }) {
                      <h4 className="text-md font-black text-indigo-400 mb-4">{day}일차 밤</h4>
                      <div className="space-y-3">
                         {nightPlayers.length > 0 ? nightPlayers.map(p => (
-                           <div key={p.uid} className="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
+                           <div key={p.uid} className="bg-background p-3 rounded-xl border border-border">
                               <span className="font-bold text-indigo-300 text-xs block mb-1">
                                 {p.name} ({getFormattedRole(p, selectedHistory.evilInfo)}){p.isRedHerring && <span className="text-rose-300 ml-1">(환각 대상)</span>}
                               </span>
-                              <div className="text-xs text-slate-400 whitespace-pre-wrap pl-2 border-l-2 border-slate-700">
+                              <div className="text-xs text-muted-foreground whitespace-pre-wrap pl-2 border-l-2 border-border">
                                  {formatNightMessage(p.messageHistory[nightIdx])}
                               </div>
                            </div>
@@ -347,7 +347,7 @@ export function HistoryViewer({ onClose }: { onClose: () => void }) {
                   {/* Day Phase */}
                   {log && (
                      <div className="bg-sky-950/20 p-5 rounded-2xl border border-sky-900/30">
-                       <h4 className="text-md font-black text-sky-400 mb-4 flex justify-between items-center">
+                       <h4 className="text-md font-black text-primary mb-4 flex justify-between items-center">
                           <span>{day}일차 낮</span>
                           {log.aliveGood !== undefined && log.aliveEvil !== undefined && (
                              <span className="text-xs text-sky-200/60 bg-sky-900/30 px-2 py-1 rounded">
@@ -359,7 +359,7 @@ export function HistoryViewer({ onClose }: { onClose: () => void }) {
                        {log.nightDeaths && log.nightDeaths.length > 0 && (
                           <div className="mb-4 bg-rose-950/20 p-3 rounded-lg border border-rose-900/30">
                              <h5 className="text-[10px] font-black text-rose-500 uppercase tracking-widest mb-1">밤 사이 사망자</h5>
-                             <p className="text-sm font-bold text-slate-300">
+                             <p className="text-sm font-bold text-foreground">
                                 {log.nightDeaths.map(name => {
                                    const p = selectedHistory.players.find(pl => pl.name === name);
                                    return p ? `${name}(${getRoleName(p.character)})` : name;
@@ -370,7 +370,7 @@ export function HistoryViewer({ onClose }: { onClose: () => void }) {
 
                        {log.abilityLogs && log.abilityLogs.length > 0 && (
                           <div className="mb-4">
-                             <h5 className="text-xs font-black text-slate-500 mb-2">낮 능력 발동 내역</h5>
+                             <h5 className="text-xs font-black text-muted-foreground mb-2">낮 능력 발동 내역</h5>
                              <ul className="space-y-2">
                                {log.abilityLogs.map((aLog, idx) => (
                                  <li key={idx} className="text-sm text-amber-400 font-bold bg-amber-950/20 p-3 rounded-lg border border-amber-900/30">
@@ -382,16 +382,16 @@ export function HistoryViewer({ onClose }: { onClose: () => void }) {
                        )}
 
                        <div className="mb-4">
-                          <h5 className="text-xs font-black text-slate-500 mb-2">투표 내역</h5>
+                          <h5 className="text-xs font-black text-muted-foreground mb-2">투표 내역</h5>
                           {log.nominations && log.nominations.length > 0 ? (
                              <ul className="space-y-2">
                                {log.nominations.map((n, idx) => (
-                                 <li key={idx} className="text-sm text-slate-300 bg-slate-950/50 p-3 rounded-lg border border-slate-800">
+                                 <li key={idx} className="text-sm text-foreground bg-background p-3 rounded-lg border border-border">
                                    <div className="flex justify-between items-center mb-1">
-                                      <span><span className="text-slate-500 text-xs mr-2">[{n.nominatorName} 지목]</span><strong className="text-white">{n.targetName}</strong></span>
-                                      <span className="text-sky-400 text-xs font-bold bg-sky-500/10 px-2 py-0.5 rounded">찬성 {n.yesCount}명</span>
+                                      <span><span className="text-muted-foreground text-xs mr-2">[{n.nominatorName} 지목]</span><strong className="text-white">{n.targetName}</strong></span>
+                                      <span className="text-primary text-xs font-bold bg-primary/10 px-2 py-0.5 rounded">찬성 {n.yesCount}명</span>
                                    </div>
-                                   <span className="text-[10px] text-slate-500 block">투표자: {n.voterNames.join(', ') || '없음'}</span>
+                                   <span className="text-[10px] text-muted-foreground block">투표자: {n.voterNames.join(', ') || '없음'}</span>
                                  </li>
                                ))}
                              </ul>
@@ -423,19 +423,19 @@ export function HistoryViewer({ onClose }: { onClose: () => void }) {
   }
 
   return (
-    <div className="flex flex-col gap-6 w-full max-w-xl animate-fade-in bg-slate-900 p-6 sm:p-8 rounded-[2.5rem] border border-slate-700 shadow-2xl h-[70vh] relative">
-      <div className="flex justify-between items-center border-b border-slate-800 pb-4 mb-4">
-        <h2 className="text-xl font-bold text-slate-200">과거 기록 열람</h2>
-        <Button variant="ghost" size="sm" onClick={onClose} className="text-slate-400 hover:text-white">닫기</Button>
+    <div className="flex flex-col gap-6 w-full max-w-xl animate-fade-in bg-card p-6 sm:p-8 rounded-[2.5rem] border border-border shadow-card h-[70vh] relative">
+      <div className="flex justify-between items-center border-b border-border pb-4 mb-4">
+        <h2 className="text-xl font-bold text-foreground">과거 기록 열람</h2>
+        <Button variant="ghost" size="sm" onClick={onClose} className="text-muted-foreground hover:text-white">닫기</Button>
       </div>
 
       {loading ? (
          <div className="flex justify-center items-center h-full">
-            <p className="text-slate-500 animate-pulse">기록을 불러오는 중...</p>
+            <p className="text-muted-foreground animate-pulse">기록을 불러오는 중...</p>
          </div>
       ) : histories.length === 0 ? (
          <div className="flex justify-center items-center h-full">
-            <p className="text-slate-500">저장된 기록이 없습니다.</p>
+            <p className="text-muted-foreground">저장된 기록이 없습니다.</p>
          </div>
       ) : (
          <div className="flex flex-col gap-3 overflow-y-auto custom-scrollbar pr-2 h-full">
@@ -443,19 +443,19 @@ export function HistoryViewer({ onClose }: { onClose: () => void }) {
                <div 
                  key={h.id} 
                  onClick={() => setSelectedHistory(h)}
-                 className="bg-slate-950 p-4 rounded-2xl border border-slate-800 hover:border-sky-500/50 cursor-pointer transition-colors group flex justify-between items-center"
+                 className="bg-background p-4 rounded-2xl border border-border hover:border-primary/50 cursor-pointer transition-colors group flex justify-between items-center"
                >
                  <div className="flex flex-col gap-1">
-                    <span className="text-xs text-slate-500">{new Date(h.timestamp).toLocaleString()}</span>
-                    <span className="text-sm font-black text-slate-300">총 {h.players.length}인 게임</span>
+                    <span className="text-xs text-muted-foreground">{new Date(h.timestamp).toLocaleString()}</span>
+                    <span className="text-sm font-black text-foreground">총 {h.players.length}인 게임</span>
                  </div>
                  <div className="flex items-center gap-3">
-                    <div className={cn("px-3 py-1 rounded-full text-xs font-black uppercase", h.winner === 'good' ? 'bg-sky-500/20 text-sky-400' : 'bg-rose-500/20 text-rose-500')}>
+                    <div className={cn("px-3 py-1 rounded-full text-xs font-black uppercase", h.winner === 'good' ? 'bg-primary/20 text-primary' : 'bg-rose-500/20 text-rose-500')}>
                        {h.winner === 'good' ? '선의 승리' : '악의 승리'}
                     </div>
                     <button 
                        onClick={(e) => handleDelete(e, h.id)}
-                       className="w-8 h-8 rounded-full bg-slate-900 border border-slate-800 text-slate-500 hover:text-rose-500 hover:bg-rose-500/10 hover:border-rose-500/30 flex items-center justify-center transition-all opacity-50 hover:opacity-100"
+                       className="w-8 h-8 rounded-full bg-card border border-border text-muted-foreground hover:text-rose-500 hover:bg-rose-500/10 hover:border-rose-500/30 flex items-center justify-center transition-all opacity-50 hover:opacity-100"
                        title="기록 삭제"
                     >
                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
@@ -468,7 +468,7 @@ export function HistoryViewer({ onClose }: { onClose: () => void }) {
                  variant="secondary" 
                  onClick={handleLoadMore} 
                  disabled={loadingMore}
-                 className="w-full mt-2 text-xs font-bold text-slate-400"
+                 className="w-full mt-2 text-xs font-bold text-muted-foreground"
                >
                  {loadingMore ? '불러오는 중...' : '이전 기록 더보기'}
                </Button>

@@ -1,4 +1,4 @@
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button';
 
 interface VoteControlsProps {
   isST: boolean;
@@ -33,18 +33,18 @@ export function VoteControls({
             {voters[userUid] === true ? (
               <Button 
                 onClick={() => handleVote(false)} 
-                variant="danger" 
+                variant="destructive" 
                 size="lg" 
-                className="flex-1 font-black h-20 text-xl shadow-xl transition-all border-rose-500/30"
+                className="flex-1 font-black h-20 text-xl shadow-card transition-all border-rose-500/30"
               >
                 투표 취소 (Cancel)
               </Button>
             ) : (
               <Button 
                 onClick={() => handleVote(true)} 
-                variant="primary" 
+                variant="default" 
                 size="lg" 
-                className="flex-1 font-black h-20 text-xl shadow-xl transition-all"
+                className="flex-1 font-black h-20 text-xl shadow-card transition-all"
                 disabled={myRole === 'butler' && !myPlayer?.isDead ? (!playerSecret?.butlerMasterUid || voters[playerSecret.butlerMasterUid] !== true) : false}
               >
                 찬성 투표 (Vote)
@@ -54,7 +54,7 @@ export function VoteControls({
           {myRole === 'butler' && !myPlayer?.isDead && (
              <div className="text-center p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 shadow-inner">
                 <p className="text-xs font-black text-amber-500 uppercase tracking-widest mb-1">집사 제약 (Butler Restriction)</p>
-                <p className="text-sm text-slate-300 font-medium">
+                <p className="text-sm text-foreground font-medium">
                   {playerSecret?.butlerMasterUid 
                     ? voters[playerSecret.butlerMasterUid] === true
                        ? <span className="text-emerald-400">주인({roomState.players[playerSecret.butlerMasterUid]?.name})이 찬성했습니다. 이제 투표할 수 있습니다!</span>
@@ -68,8 +68,8 @@ export function VoteControls({
       ) : (
         <div className="flex flex-col gap-3">
            <div className="flex flex-col gap-3">
-              <Button onClick={endVoting} variant="primary" size="lg" className="w-full font-black uppercase h-16 shadow-xl border-transparent">투표 결과 확정</Button>
-              <Button onClick={handleCancelNomination} variant="ghost" className="w-full text-xs text-slate-500 uppercase tracking-widest font-black underline underline-offset-8 decoration-slate-800">투표 취소 및 돌아가기</Button>
+              <Button onClick={endVoting} variant="default" size="lg" className="w-full font-black uppercase h-16 shadow-card border-transparent">투표 결과 확정</Button>
+              <Button onClick={handleCancelNomination} variant="ghost" className="w-full text-xs text-muted-foreground uppercase tracking-widest font-black underline underline-offset-8 decoration-slate-800">투표 취소 및 돌아가기</Button>
            </div>
         </div>
       )}

@@ -52,10 +52,10 @@ const PlayerToken = memo(({
       )}
     >
       <div className={cn(
-        "relative w-16 h-16 rounded-full border-2 flex items-center justify-center transition-all duration-700 shadow-2xl",
-        isDead ? "border-slate-800 bg-slate-950 grayscale opacity-50" : "border-slate-700 bg-slate-900",
+        "relative w-16 h-16 rounded-full border-2 flex items-center justify-center transition-all duration-700 shadow-card",
+        isDead ? "border-border bg-background grayscale opacity-50" : "border-border bg-card",
         showFullInfo && secret?.alignment === 'evil' && !isDead && "border-rose-600 shadow-[0_0_25px_rgba(225,29,72,0.5)] ring-2 ring-rose-500/20",
-        showFullInfo && secret?.alignment === 'good' && !isDead && "border-sky-500 shadow-[0_0_15px_rgba(14,165,233,0.4)] ring-2 ring-sky-500/10",
+        showFullInfo && secret?.alignment === 'good' && !isDead && "border-primary shadow-[0_0_15px_rgba(14,165,233,0.4)] ring-2 ring-sky-500/10",
         isSelectingNominator && "border-sky-400 ring-4 ring-sky-400/30 scale-110 shadow-[0_0_30px_rgba(56,189,248,0.6)] z-20",
         isBeingTargeted && "hover:border-rose-500 hover:ring-4 hover:ring-rose-500/30",
         isNominated && "border-amber-400 ring-4 ring-amber-400/30 shadow-[0_0_20px_rgba(251,191,36,0.5)]"
@@ -63,7 +63,7 @@ const PlayerToken = memo(({
         {showFullInfo ? (
            <div className={cn(
              "text-sm font-black tracking-tighter",
-             secret?.alignment === 'evil' ? "text-rose-500" : "text-sky-400"
+             secret?.alignment === 'evil' ? "text-rose-500" : "text-primary"
            )}>
              {secret?.character?.substring(0, 1).toUpperCase() || '?'}
            </div>
@@ -94,8 +94,8 @@ const PlayerToken = memo(({
       <div className="mt-3 flex flex-col items-center gap-1 max-w-[100px]">
         <span className={cn(
           "text-sm font-black uppercase tracking-widest truncate w-full text-center px-2 py-0.5 rounded transition-all",
-          isDead ? "text-slate-700" : "text-slate-200 bg-slate-900/40 border border-slate-800 shadow-sm",
-          isSelectingNominator && "text-sky-400 bg-sky-950 border-sky-500/50",
+          isDead ? "text-slate-700" : "text-foreground bg-card border border-border shadow-sm",
+          isSelectingNominator && "text-primary bg-sky-950 border-primary/50",
           isNominated && "text-amber-400 bg-amber-950 border-amber-500/50",
           hasVotedYes && "text-emerald-400 bg-emerald-950 border-emerald-500/50"
         )}>
@@ -106,7 +106,7 @@ const PlayerToken = memo(({
            <div className="flex flex-col items-center">
              <span className={cn(
                "text-xs font-bold uppercase tracking-wider leading-none mb-1",
-               secret?.alignment === 'evil' ? "text-rose-500/90" : "text-sky-400/90"
+               secret?.alignment === 'evil' ? "text-rose-500/90" : "text-primary/90"
              )}>
                {getRoleName(secret?.character)}
                {secret?.character === 'drunk' && secret?.fakeCharacter && (
@@ -118,7 +118,7 @@ const PlayerToken = memo(({
                 {secret?.isRedHerring && <span className="text-[10px] font-black bg-rose-950/80 text-rose-300 border border-rose-900/50 px-1.5 py-0.5 rounded shadow-sm uppercase">환각</span>}
                 {isPoisoned && <span className="text-xs font-black bg-purple-600 text-white px-1.5 py-0.5 rounded shadow-sm uppercase">Psn</span>}
                 {isDrunk && <span className="text-xs font-black bg-amber-600 text-slate-950 px-1.5 py-0.5 rounded shadow-sm uppercase">Drk</span>}
-                {isUsed && <span className="text-xs font-black bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded shadow-sm uppercase">Used</span>}
+                {isUsed && <span className="text-xs font-black bg-muted text-muted-foreground px-1.5 py-0.5 rounded shadow-sm uppercase">Used</span>}
              </div>
            </div>
         )}
@@ -360,24 +360,24 @@ export function TownSquare() {
   return (
     <div className="w-full flex flex-col items-center select-none py-2 sm:py-6 relative">
       <div className="mb-6 flex flex-wrap gap-4 items-center justify-between w-full px-4">
-        <h3 className="text-xs font-black text-slate-500 uppercase tracking-[0.4em] font-serif shrink-0">Town Square</h3>
+        <h3 className="text-xs font-black text-muted-foreground uppercase tracking-[0.4em] font-serif shrink-0">Town Square</h3>
         <div className="flex gap-2 sm:gap-3 items-center ml-auto">
-           <div className="flex bg-slate-900 rounded-full border border-slate-700 p-1 shadow-inner gap-1">
-             <button onClick={() => setZoomLevel(p => Math.max(0.6, p - 0.2))} className="w-10 h-10 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" aria-label="축소">
+           <div className="flex bg-card rounded-full border border-border p-1 shadow-inner gap-1">
+             <button onClick={() => setZoomLevel(p => Math.max(0.6, p - 0.2))} className="w-10 h-10 rounded-full flex items-center justify-center text-muted-foreground hover:text-white hover:bg-muted transition-colors" aria-label="축소">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
              </button>
-             <button onClick={() => setZoomLevel(p => Math.min(2.0, p + 0.2))} className="w-10 h-10 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" aria-label="확대">
+             <button onClick={() => setZoomLevel(p => Math.min(2.0, p + 0.2))} className="w-10 h-10 rounded-full flex items-center justify-center text-muted-foreground hover:text-white hover:bg-muted transition-colors" aria-label="확대">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
              </button>
            </div>
            <button 
              onClick={() => setIsHelpOpen(true)}
-             className="w-8 h-8 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center font-black shadow-sm hover:bg-slate-700 hover:text-white transition-colors shrink-0"
+             className="w-8 h-8 rounded-full bg-muted text-muted-foreground flex items-center justify-center font-black shadow-sm hover:bg-slate-700 hover:text-white transition-colors shrink-0"
              aria-label="캐릭터 도움말"
            >
              ?
            </button>
-           <span className="text-xs text-sky-500 font-mono bg-sky-500/10 px-3 py-1 rounded border border-sky-500/20 uppercase font-black tracking-widest shrink-0">
+           <span className="text-xs text-primary font-mono bg-primary/10 px-3 py-1 rounded border border-primary/20 uppercase font-black tracking-widest shrink-0">
              DAY {roomState.dayNumber}
            </span>
         </div>
@@ -390,21 +390,21 @@ export function TownSquare() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] bg-slate-950/95 backdrop-blur-md overflow-hidden flex flex-col items-center"
+            className="fixed inset-0 z-[200] bg-background backdrop-blur-md overflow-hidden flex flex-col items-center"
           >
             <motion.div 
               initial={{ y: 50, scale: 0.95 }}
               animate={{ y: 0, scale: 1 }}
               exit={{ y: 20, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="w-full h-full sm:max-w-xl sm:h-auto sm:max-h-[85vh] sm:mt-10 sm:rounded-3xl bg-slate-900 flex flex-col shadow-2xl relative"
+              className="w-full h-full sm:max-w-xl sm:h-auto sm:max-h-[85vh] sm:mt-10 sm:rounded-3xl bg-card flex flex-col shadow-card relative"
             >
-               <div className="sticky top-0 z-10 bg-slate-900/90 backdrop-blur border-b border-slate-700/50 p-4 sm:p-6 flex flex-col gap-4 sm:rounded-t-3xl">
+               <div className="sticky top-0 z-10 bg-card backdrop-blur border-b border-border p-4 sm:p-6 flex flex-col gap-4 sm:rounded-t-3xl">
                   <div className="flex justify-between items-center">
-                     <h2 className="text-xl sm:text-2xl font-black text-slate-200 uppercase tracking-tighter">캐릭터 가이드</h2>
+                     <h2 className="text-xl sm:text-2xl font-black text-foreground uppercase tracking-tighter">캐릭터 가이드</h2>
                      <button 
                        onClick={() => setIsHelpOpen(false)}
-                       className="w-10 h-10 bg-slate-800 text-slate-400 rounded-full flex items-center justify-center font-black hover:bg-rose-600 hover:text-white transition-colors"
+                       className="w-10 h-10 bg-muted text-muted-foreground rounded-full flex items-center justify-center font-black hover:bg-rose-600 hover:text-white transition-colors"
                      >
                        X
                      </button>
@@ -416,7 +416,7 @@ export function TownSquare() {
                            onClick={() => setActiveTab(tab)}
                            className={cn(
                               "flex-1 py-2 text-xs sm:text-sm font-black uppercase tracking-widest rounded-lg transition-all",
-                              activeTab === tab ? "bg-sky-600 text-white shadow-lg scale-105" : "bg-slate-800 text-slate-400 hover:bg-slate-700"
+                              activeTab === tab ? "bg-primary text-white shadow-lg scale-105" : "bg-muted text-muted-foreground hover:bg-slate-700"
                            )}
                         >
                            {tab === 'townsfolk' ? '주민' : tab === 'outsider' ? '외부자' : '하수인/악마'}
@@ -440,12 +440,12 @@ export function TownSquare() {
                            const roles = TROUBLE_BREWING_ROLES.filter(r => r.type === type);
                            return (
                               <div key={type} className="space-y-3 mb-6">
-                                <h3 className={cn("text-sm font-black uppercase tracking-widest border-l-4 pl-3", colorClass, colorClass.includes('sky') ? 'border-sky-500' : 'border-rose-500')}>{label}</h3>
+                                <h3 className={cn("text-sm font-black uppercase tracking-widest border-l-4 pl-3", colorClass, colorClass.includes('sky') ? 'border-primary' : 'border-rose-500')}>{label}</h3>
                                 <div className="space-y-2">
                                   {roles.map(r => (
-                                    <div key={r.id} className="bg-slate-950/50 p-3 sm:p-4 rounded-xl border border-slate-800/80">
+                                    <div key={r.id} className="bg-background p-3 sm:p-4 rounded-xl border border-border">
                                       <span className={cn("text-base font-bold block mb-1.5", colorClass)}>{r.name}</span>
-                                      <p className="text-sm text-slate-400 leading-relaxed break-keep-all">{r.description}</p>
+                                      <p className="text-sm text-muted-foreground leading-relaxed break-keep-all">{r.description}</p>
                                     </div>
                                   ))}
                                 </div>
@@ -453,7 +453,7 @@ export function TownSquare() {
                            );
                         };
 
-                        if (activeTab === 'townsfolk') return renderType('townsfolk', '마을 주민 (Townsfolk)', 'text-sky-400');
+                        if (activeTab === 'townsfolk') return renderType('townsfolk', '마을 주민 (Townsfolk)', 'text-primary');
                         if (activeTab === 'outsider') return renderType('outsider', '외부자 (Outsider)', 'text-sky-200');
                         if (activeTab === 'evil') return (
                            <>
@@ -474,7 +474,7 @@ export function TownSquare() {
          <div className="min-w-full w-max flex justify-center px-4 sm:px-10 py-10">
             <div 
                style={{ width: `${center * 2}px`, height: `${center * 2}px` }}
-               className="relative bg-slate-900/10 rounded-full border border-slate-800/30 flex-shrink-0 transition-all duration-300"
+               className="relative bg-card rounded-full border border-border flex-shrink-0 transition-all duration-300"
             >
            {role === 'st' && !isVoting && (
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-10 animate-fade-in">
@@ -482,13 +482,13 @@ export function TownSquare() {
                   {selectedNominator ? "지목할 대상을 클릭하세요" : "지목자를 클릭하세요"}
                 </p>
                 <div className="flex justify-center gap-1">
-                   <div className={cn("w-1.5 h-1.5 rounded-full transition-colors", selectedNominator ? "bg-sky-500" : "bg-sky-500 animate-pulse")}></div>
-                   <div className={cn("w-1.5 h-1.5 rounded-full transition-colors", selectedNominator ? "bg-rose-500 animate-pulse" : "bg-slate-800")}></div>
+                   <div className={cn("w-1.5 h-1.5 rounded-full transition-colors", selectedNominator ? "bg-primary" : "bg-primary animate-pulse")}></div>
+                   <div className={cn("w-1.5 h-1.5 rounded-full transition-colors", selectedNominator ? "bg-rose-500 animate-pulse" : "bg-muted")}></div>
                 </div>
              </div>
            )}
 
-           <div className="w-24 h-28 bg-slate-950 rounded-[40%] blur-3xl opacity-50 absolute pointer-events-none transition-all duration-300" style={{ transform: `scale(${zoomLevel})` }}></div>
+           <div className="w-24 h-28 bg-background rounded-[40%] blur-3xl opacity-50 absolute pointer-events-none transition-all duration-300" style={{ transform: `scale(${zoomLevel})` }}></div>
            
            {players.map((p, i) => (
              <PlayerToken

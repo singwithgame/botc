@@ -4,7 +4,7 @@ import { useGameData } from '../../hooks/useFirebaseSync';
 import { database } from '../../lib/firebase';
 import { ref, update, get } from 'firebase/database';
 import { useAuth } from '../../hooks/useAuth';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button';
 
 export function PlayerLobby() {
   const { user } = useAuth();
@@ -65,15 +65,15 @@ export function PlayerLobby() {
   if (!roomId) {
     return (
       <form onSubmit={handleJoin} className="flex flex-col gap-4 w-full max-w-sm">
-        <h2 className="text-xl font-bold text-slate-300 text-center mb-4">플레이어 입장</h2>
+        <h2 className="text-xl font-bold text-foreground text-center mb-4">플레이어 입장</h2>
         
         <div>
-          <label className="block text-slate-400 text-sm mb-1">방 코드</label>
+          <label className="block text-muted-foreground text-sm mb-1">방 코드</label>
           <input
             type="text"
             value={inputCode}
             onChange={(e) => setInputCode(e.target.value.trim())}
-            className="w-full bg-slate-950 border border-slate-700 text-slate-200 rounded-lg p-3 outline-none focus:border-sky-400 transition-colors tracking-widest text-center text-lg"
+            className="w-full bg-background border border-border text-foreground rounded-lg p-3 outline-none focus:border-sky-400 transition-colors tracking-widest text-center text-lg"
             placeholder="6자리 숫자"
             maxLength={6}
             required
@@ -81,12 +81,12 @@ export function PlayerLobby() {
         </div>
 
         <div>
-          <label className="block text-slate-400 text-sm mb-1">닉네임</label>
+          <label className="block text-muted-foreground text-sm mb-1">닉네임</label>
           <input
             type="text"
             value={inputName}
             onChange={(e) => setInputName(e.target.value)}
-            className="w-full bg-slate-950 border border-slate-700 text-slate-200 rounded-lg p-3 outline-none focus:border-sky-400 transition-colors"
+            className="w-full bg-background border border-border text-foreground rounded-lg p-3 outline-none focus:border-sky-400 transition-colors"
             placeholder="당신의 이름"
             maxLength={10}
             required
@@ -99,7 +99,7 @@ export function PlayerLobby() {
           type="submit"
           disabled={loading || !user || !inputCode || !inputName}
           isLoading={loading}
-          variant="primary"
+          variant="default"
           size="lg"
           className="w-full mt-2"
         >
@@ -112,14 +112,14 @@ export function PlayerLobby() {
   // Already joined, waiting for ST
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-sm text-center">
-      <div className="bg-slate-950 p-6 rounded-xl border border-slate-800 w-full shadow-lg">
-        <h2 className="text-xl font-bold text-slate-300 mb-2">로비 대기 중</h2>
-        <p className="text-slate-400 text-sm mb-6">
+      <div className="bg-background p-6 rounded-xl border border-border w-full shadow-lg">
+        <h2 className="text-xl font-bold text-foreground mb-2">로비 대기 중</h2>
+        <p className="text-muted-foreground text-sm mb-6">
           스토리텔러가 마도서를 세팅하고 있습니다.<br/>
           잠시만 기다려주세요.
         </p>
         
-        <div className="inline-block border border-sky-400/50 text-sky-400 rounded-full px-4 py-1.5 text-sm bg-sky-400/10 font-mono">
+        <div className="inline-block border border-sky-400/50 text-primary rounded-full px-4 py-1.5 text-sm bg-sky-400/10 font-mono">
           방 코드: {roomId}
         </div>
       </div>

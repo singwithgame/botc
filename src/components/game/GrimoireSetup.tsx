@@ -3,7 +3,7 @@ import { useGameStore } from '../../store/gameStore';
 import { useSecretData, useGameData } from '../../hooks/useFirebaseSync';
 import type { RoleType, Alignment } from '../../types/character';
 import type { SecretPlayer } from '../../types/game';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button';
 
 const TROUBLE_BREWING_ROLES: { id: RoleType; name: string; align: Alignment; type: string }[] = [
   { id: 'washerwoman', name: '세탁부', align: 'good', type: 'townsfolk' },
@@ -235,16 +235,16 @@ export function GrimoireSetup() {
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-xl animate-fade-in pb-10">
-      <div className="bg-slate-900/80 p-6 rounded-xl border border-slate-800 backdrop-blur shadow-xl">
-        <div className="flex justify-between items-start mb-6 border-b border-slate-800 pb-4">
+      <div className="bg-card p-6 rounded-xl border border-border backdrop-blur shadow-card">
+        <div className="flex justify-between items-start mb-6 border-b border-border pb-4">
           <div>
-            <h2 className="text-xl font-bold text-sky-400 font-serif uppercase tracking-tight">Grimoire Design</h2>
-            <p className="text-xs text-slate-500 font-mono mt-1">Sess: {roomId} | Count: {orderedPlayers.length}</p>
+            <h2 className="text-xl font-bold text-primary font-serif uppercase tracking-tight">Grimoire Design</h2>
+            <p className="text-xs text-muted-foreground font-mono mt-1">Sess: {roomId} | Count: {orderedPlayers.length}</p>
           </div>
           <div className="text-right">
-            <p className="text-xs text-slate-500 uppercase tracking-widest mb-1 font-black">Target Ratio</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1 font-black">Target Ratio</p>
             <div className="flex gap-2 text-xs font-black">
-              <span className="text-sky-400">T{props.townsfolk}</span>
+              <span className="text-primary">T{props.townsfolk}</span>
               <span className="text-amber-400">O{props.outsider}</span>
               <span className="text-rose-400">M{props.minion}</span>
               <span className="text-rose-600">D{props.demon}</span>
@@ -252,7 +252,7 @@ export function GrimoireSetup() {
           </div>
         </div>
 
-        <div className="relative w-[300px] h-[300px] mx-auto mb-10 bg-slate-950/50 rounded-full border border-slate-800/30">
+        <div className="relative w-[300px] h-[300px] mx-auto mb-10 bg-background rounded-full border border-border">
           {orderedPlayers.map((p, i) => {
             const pos = getPosition(i, orderedPlayers.length);
             const role = assignedRoles[p.uid];
@@ -263,14 +263,14 @@ export function GrimoireSetup() {
                 <div 
                   onClick={() => hasFortuneTeller && setRedHerringUid(p.uid)}
                   className={`w-12 h-12 rounded-full border-2 flex items-center justify-center text-xs font-black transition-all shadow-lg overflow-hidden cursor-pointer
-                  ${roleDef?.align === 'good' ? 'border-sky-500 bg-sky-950/80 text-sky-400' : 
+                  ${roleDef?.align === 'good' ? 'border-primary bg-sky-950/80 text-primary' : 
                     roleDef?.align === 'evil' ? 'border-rose-500 bg-rose-950/80 text-rose-400' : 
-                    'border-slate-700 bg-slate-900 text-slate-500'}
+                    'border-border bg-card text-muted-foreground'}
                   ${isRH ? 'ring-4 ring-amber-500 ring-offset-2 ring-offset-slate-950' : ''}`}
                 >
                   {roleDef ? roleDef.name.substring(0, 2) : i + 1}
                 </div>
-                <div className="mt-1 text-xs text-slate-400 font-black uppercase whitespace-nowrap bg-slate-950/80 px-1.5 py-0.5 rounded border border-slate-800">{p.name}</div>
+                <div className="mt-1 text-xs text-muted-foreground font-black uppercase whitespace-nowrap bg-background px-1.5 py-0.5 rounded border border-border">{p.name}</div>
               </div>
             );
           })}
@@ -284,27 +284,27 @@ export function GrimoireSetup() {
         {hasFortuneTeller && (
            <div className="mb-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-center animate-fade-in">
              <p className="text-xs text-amber-400 font-bold uppercase tracking-widest mb-1">Fortune Teller Active</p>
-             <p className="text-sm text-slate-300">위의 원형 배치도에서 **환각(주민)**을 한 명 클릭하여 지정하세요.</p>
+             <p className="text-sm text-foreground">위의 원형 배치도에서 **환각(주민)**을 한 명 클릭하여 지정하세요.</p>
            </div>
         )}
 
         <div className="space-y-1.5 pr-2">
           {orderedPlayers.map((p, index) => (
-            <div key={p.uid} className="bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/60 flex items-center gap-3 transition-colors hover:bg-slate-900/50">
+            <div key={p.uid} className="bg-background p-2.5 rounded-xl border border-border flex items-center gap-3 transition-colors hover:bg-card">
               <div className="flex flex-col gap-1">
-                <button onClick={() => movePlayer(index, -1)} disabled={index === 0} className="text-slate-600 hover:text-sky-400 disabled:opacity-10 transition-colors">
+                <button onClick={() => movePlayer(index, -1)} disabled={index === 0} className="text-slate-600 hover:text-primary disabled:opacity-10 transition-colors">
                   <svg width="12" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2L15 10H0L7.5 2Z" fill="currentColor"/></svg>
                 </button>
-                <button onClick={() => movePlayer(index, 1)} disabled={index === orderedPlayers.length - 1} className="text-slate-600 hover:text-sky-400 disabled:opacity-10 transition-colors">
+                <button onClick={() => movePlayer(index, 1)} disabled={index === orderedPlayers.length - 1} className="text-slate-600 hover:text-primary disabled:opacity-10 transition-colors">
                   <svg width="12" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 13L0 5H15L7.5 13Z" fill="currentColor"/></svg>
                 </button>
               </div>
               <span className="text-xs font-black text-slate-700 w-4 font-mono">{index + 1}</span>
-              <span className="text-xs font-bold text-slate-300 flex-1 truncate uppercase">{p.name}</span>
+              <span className="text-xs font-bold text-foreground flex-1 truncate uppercase">{p.name}</span>
               <select
                 value={assignedRoles[p.uid] || ''}
                 onChange={(e) => setAssignedRoles(prev => ({ ...prev, [p.uid]: e.target.value as RoleType }))}
-                className="bg-slate-900 border border-slate-800 text-slate-300 text-xs font-bold rounded-lg p-1.5 outline-none focus:border-sky-500 w-28 appearance-none text-center cursor-pointer"
+                className="bg-card border border-border text-foreground text-xs font-bold rounded-lg p-1.5 outline-none focus:border-primary w-28 appearance-none text-center cursor-pointer"
               >
                 <option value="" disabled>-- SELECT --</option>
                 <optgroup label="🏘️ 주민 (Townsfolk)">
@@ -337,9 +337,9 @@ export function GrimoireSetup() {
         onClick={handleStartGame}
         disabled={loading || !allAssigned}
         isLoading={loading}
-        variant="primary"
+        variant="default"
         size="lg"
-        className="w-full shadow-2xl font-black uppercase tracking-widest border-transparent"
+        className="w-full shadow-card font-black uppercase tracking-widest border-transparent"
       >
         Seal Grimoire & First Night
       </Button>
