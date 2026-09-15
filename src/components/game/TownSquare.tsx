@@ -1,4 +1,4 @@
-import { useState, useMemo, memo } from 'react';
+import { useState, useMemo, memo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
 import { useSecretData, usePlayerSecretData } from '../../hooks/useFirebaseSync';
@@ -7,7 +7,8 @@ import { getRoleName, TROUBLE_BREWING_ROLES } from '../../constants/roles';
 import { useAuth } from '../../hooks/useAuth';
 import { database } from '../../lib/firebase';
 import { ref, update } from 'firebase/database';
-import { handleDemonDeath, checkWinCondition } from '../../lib/gameLogic';
+import { checkVirginTrigger, executeVirginPower } from '../../lib/virginLogic';
+
 
 // Memoized Player Token Component to prevent unnecessary re-renders
 const PlayerToken = memo(({ 
@@ -181,7 +182,7 @@ export function TownSquare() {
     ? Object.keys(activeNomination.voters || {}).filter(uid => activeNomination.voters[uid] === true)
     : (lastHistory?.voterUids || []);
 
-  const handlePlayerClick = async (clickedUid: string) => {
+  const handlePlayerClick = useCallback(async (clickedUid: string) => {
     if (role !== 'st' || roomState?.status === 'end' || isVoting) return;
 
     const clickedPlayer = roomState.players[clickedUid];
@@ -218,109 +219,26 @@ export function TownSquare() {
         
         if (targetSecret?.character === 'virgin' && !targetSecret.isUsed) {
            let updates: Record<string, any> = {};
+           virginTriggeredExecution = false;
            
            if (!targetSecret.isPoisoned && !targetSecret.isDrunk) {
-              let triggersVirgin = false;
-              if (nominatorSecret?.alignment === 'good' && !['butler', 'drunk', 'recluse', 'saint'].includes(nominatorSecret.character || '')) {
-                 triggersVirgin = true;
-              } else if (nominatorSecret?.character === 'spy') {
-                 if (window.confirm("스파이가 처녀를 지목했습니다. 스파이를 마을 주민으로 취급하여 즉시 처형하시겠습니까?")) {
-                    triggersVirgin = true;
-                 }
-              }
+               const triggersVirgin = checkVirginTrigger(
+                  nominatorSecret,
+                  () => window.confirm("스파이가 처녀를 지목했습니다. 스파이를 마을 주민으로 취급하여 즉시 처형하시겠습니까?")
+               );
 
-              if (triggersVirgin) {
-                 virginTriggeredExecution = true;
-                 
-                 const pubClone = JSON.parse(JSON.stringify(roomState));
-                 const secClone = JSON.parse(JSON.stringify(secretState));
-                 pubClone.players[selectedNominator].isDead = true;
-                 pubClone.players[selectedNominator].hasGhostVote = true;
-                 pubClone.lastExecutedUid = selectedNominator;
-                 secClone.players[clickedUid].isUsed = true; // Set isUsed in clone
-
-                 if (secClone.players[selectedNominator]?.character === 'imp') {
-                    const inherited = handleDemonDeath(pubClone, secClone, false, selectedNominator);
-                    if (inherited) {
-                       secClone.dayLogs = secClone.dayLogs || {};
-                       secClone.dayLogs[roomState.dayNumber] = secClone.dayLogs[roomState.dayNumber] || { nominations: [], executedUid: null, abilityLogs: [] };
-                       secClone.dayLogs[roomState.dayNumber].abilityLogs = secClone.dayLogs[roomState.dayNumber].abilityLogs || [];
-                       secClone.dayLogs[roomState.dayNumber].abilityLogs.push(`※ [시스템] 조건 충족으로 새로운 악마(임프)가 계승되었습니다.`);
-                    }
-                 }
-
-                 const winResult = checkWinCondition(pubClone, secClone);
-                 
-                 secClone.dayLogs = secClone.dayLogs || {};
-                 secClone.dayLogs[roomState.dayNumber] = {
-                    ...secClone.dayLogs[roomState.dayNumber],
-                    nominations: pubClone.nominationHistory || [],
-                    executedUid: pubClone.lastExecutedUid || null,
-                    abilityLogs: [...(secClone.dayLogs[roomState.dayNumber]?.abilityLogs || []), `처녀(Virgin) 능력 발동: 지목자 ${nominatorName} 즉시 처형`]
-                 };
-
-                 if (winResult) {
-                    pubClone.status = 'end';
-                    pubClone.winner = winResult.winner;
-                    
-                    const winningPlayers = Object.values(pubClone.players).map((p: any) => {
-                       const secret = secClone.players[p.uid];
-                       return {
-                          name: p.name,
-                          character: secret?.character || null,
-                          originalCharacter: secret?.originalCharacter || null,
-                          fakeCharacter: secret?.fakeCharacter || null,
-                          isRedHerring: secret?.isRedHerring || false,
-                          alignment: secret?.alignment || null
-                       };
-                    }).filter(p => p.alignment === pubClone.winner);
-                    
-                    pubClone.winningPlayers = winningPlayers;
-
-                    const newId = `${Date.now()}_${roomId}`;
-                    const historyRecord = {
-                       id: newId,
-                       timestamp: Date.now(),
-                       winner: pubClone.winner,
-                       winReason: winResult.reason,
-                       evilInfo: secClone.evilInfo || null,
-                       players: Object.values(pubClone.players).map((p: any) => ({
-                          uid: p.uid,
-                          name: p.name,
-                          character: secClone.players[p.uid]?.character || null,
-                          originalCharacter: secClone.players[p.uid]?.originalCharacter || null,
-                          fakeCharacter: secClone.players[p.uid]?.fakeCharacter || null,
-                          isRedHerring: secClone.players[p.uid]?.isRedHerring || false,
-                          messageHistory: secClone.players[p.uid]?.messageHistory || []
-                       })),
-                       dayLogs: secClone.dayLogs
-                    };
-                    updates[`history/${newId}`] = historyRecord;
-                 } else {
-                    pubClone.status = 'night';
-                    pubClone.dayNumber += 1;
-                    
-                    updates[`public/rooms/${roomId}/usedNominators`] = [];
-                    updates[`public/rooms/${roomId}/usedTargets`] = [];
-                    updates[`public/rooms/${roomId}/nominationHistory`] = [];
-                 }
-
-                 updates[`public/rooms/${roomId}/status`] = pubClone.status;
-                 if (pubClone.status === 'night') {
-                    updates[`public/rooms/${roomId}/dayNumber`] = pubClone.dayNumber;
-                 } else if (pubClone.status === 'end') {
-                    updates[`public/rooms/${roomId}/winner`] = pubClone.winner;
-                    updates[`public/rooms/${roomId}/winReason`] = pubClone.winReason;
-                    updates[`public/rooms/${roomId}/winningPlayers`] = pubClone.winningPlayers;
-                 }
-                 
-                 updates[`public/rooms/${roomId}/players/${selectedNominator}/isDead`] = true;
-                 updates[`public/rooms/${roomId}/players/${selectedNominator}/hasGhostVote`] = true;
-                 updates[`public/rooms/${roomId}/lastExecutedUid`] = selectedNominator;
-
-                 updates[`secret/rooms/${roomId}`] = secClone;
-                 alert(`처녀(Virgin) 능력이 발동되었습니다! 지목자 ${roomState.players[selectedNominator].name}님이 즉시 처형됩니다.`);
-              }
+               if (triggersVirgin) {
+                  virginTriggeredExecution = true;
+                  updates = executeVirginPower(
+                    roomState as any,
+                    secretState as any,
+                    selectedNominator,
+                    clickedUid,
+                    roomId as string,
+                    nominatorName
+                  );
+                  alert(`처녀(Virgin) 능력이 발동되었습니다! 지목자 ${roomState.players[selectedNominator].name}님이 즉시 처형됩니다.`);
+               }
            }
            
            if (virginTriggeredExecution) {
@@ -328,7 +246,6 @@ export function TownSquare() {
               setSelectedNominator(null);
               return;
            } else {
-              // 처형되지 않았어도 isUsed는 업데이트해야 하므로
               updates = {};
               updates[`secret/rooms/${roomId}/players/${clickedUid}/isUsed`] = true;
               await update(ref(database), updates);
@@ -355,7 +272,7 @@ export function TownSquare() {
         setSelectedNominator(null);
       }
     }
-  };
+  }, [role, roomState, secretState, isVoting, selectedNominator, usedNominators, usedTargets, roomId]);
 
   return (
     <div className="w-full flex flex-col items-center select-none py-2 sm:py-6 relative">

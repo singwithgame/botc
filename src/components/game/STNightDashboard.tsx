@@ -73,15 +73,15 @@ export function STNightDashboard() {
         if (simPubState.players[uid]) simPubState.players[uid].isDead = true;
      });
      const suggestions = getNightSuggestions(roomState, secretState, simPubState);
-     const newEdits: Record<string, string> = { ...editedSuggestions };
-     const newWarnings: Record<string, string> = { ...suggestionWarnings };
+     const newEdits: Record<string, string> = {};
+     const newWarnings: Record<string, string> = {};
      Object.entries(suggestions).forEach(([uid, res]: [string, any]) => {
         newEdits[uid] = res.message;
         if (res.warning) newWarnings[uid] = res.warning;
      });
-     setEditedSuggestions(newEdits);
-     setSuggestionWarnings(newWarnings);
-  }, [roomState, secretState, editedSuggestions, suggestionWarnings, pendingDeaths]);
+     setEditedSuggestions(prev => ({ ...prev, ...newEdits }));
+     setSuggestionWarnings(prev => ({ ...prev, ...newWarnings }));
+  }, [roomState, secretState, pendingDeaths]);
 
   const toggleDeath = useCallback((uid: string) => {
     setPendingDeaths(prev => 
